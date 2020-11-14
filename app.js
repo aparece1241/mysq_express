@@ -7,7 +7,7 @@ const sequelize = require('./msql_connection');
 
 //get all data {test}
 app.get('/getdata', (req, res)=> {
-    sequelize.query("SELECT * FROM `user`", { type: sequelize.QueryTypes.SELECT})
+    sequelize.query("SELECT * FROM `userModels`", { type: sequelize.QueryTypes.SELECT})
   .then(users => {
       console.log(users);
     res.json({users: users});
@@ -18,7 +18,7 @@ app.get('/getdata', (req, res)=> {
 
 
 app.post('/adddata',(req, res)=> {
-    sequelize.query("INSERT INTO `user`(`id`, `username`, `password`, `email`) VALUES (null,'sarah','password','sarah@gmail.com')")
+    sequelize.query("INSERT INTO `userModels`(`id`, `username`, `password`, `email`) VALUES (null,'sarah','password','sarah@gmail.com')")
         .then((user)=>{
             console.log(user);
             res.json({message: "Successfully added", data: user})
