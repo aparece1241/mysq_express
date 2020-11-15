@@ -1,11 +1,11 @@
-####
-POST http://localhost:3000/user/add-user
+#####
+GET http://localhost:3000/todos/all
+
+###
+POST http://localhost:3000/todos/add
 Content-Type: application/json
 
 {
-    "username": "Doe3",
-    "password": "password3",
-    "email": "doe3@test.com"
+    "title": "Clean The Room",
+    "description": "i must clean the room today",
 }
-####
-GET http://localhost:3000/user/get-all
