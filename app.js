@@ -1,43 +1,12 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const bodyParser = require('body-parser');
 
-//temporary
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
 const sequelize = require('./msql_connection');
-
-//get all data {test}
-app.get('/getdata', (req, res)=> {
-    sequelize.query("SELECT * FROM `userModels`", { type: sequelize.QueryTypes.SELECT})
-  .then(users => {
-      console.log(users);
-    res.json({users: users});
-  }).catch((error)=>{
-      console.log(`ERROR: ${error}`);
-  })
-});
-
-
-app.post('/adddata',(req, res)=> {
-    sequelize.query("INSERT INTO `userModels`(`id`, `username`, `password`, `email`) VALUES (null,'sarah','password','sarah@gmail.com')")
-        .then((user)=>{
-            console.log(user);
-            res.json({message: "Successfully added", data: user})
-        }).catch((error)=> {
-            res.json({error: error});
-        })
-})
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

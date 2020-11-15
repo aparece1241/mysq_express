@@ -1,8 +1,9 @@
 const { Sequelize } = require("sequelize");
+const dbConfigs = require('./config/config');
 
 
-const sequelize = new Sequelize("simplecrudtest", "simpletest1234", "simple101", {
-    host: "db4free.net",
+const sequelize = new Sequelize(dbConfigs.development.database, dbConfigs.development.username, dbConfigs.development.password, {
+    host: dbConfigs.development.host,
     dialect: "mysql",
     pool: {
         max: 5,
@@ -11,12 +12,16 @@ const sequelize = new Sequelize("simplecrudtest", "simpletest1234", "simple101",
         idle: 10000
     }
 });
+
 sequelize.authenticate()
     .then(() => {
         console.log("Connected to mysql database!")
+
     }).catch((error) => {
-        console.log("ERROR:", error)
+        console.log("ERROR:", error);
+
     })
+
 
 
 module.exports = sequelize;

@@ -1,0 +1,11 @@
+####
+POST http://localhost:3000/user/add-user
+Content-Type: application/json
+
+{
+    "username": "Doe3",
+    "password": "password3",
+    "email": "doe3@test.com"
+}
+####
+GET http://localhost:3000/user/get-all
