@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Todos</title>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        nav {
+            direction: rtl;
+        }
+
+        .todo:hover {
+            cursor: pointer;
+            border: solid gray 1px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- add todo form -->
+    <div class="modal" id="addEdit">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title text-center" id="header">Add Todos</h4>
+                    <button type="button" class="close c" data-dismiss="#edit">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <form class="form-group" id="form" action="/todos/add" method="post">
+                        <input type="text" name="title" id="title" class="form-control" placeholder="Todo Title">
+                        <textarea name="description" id="description" class="form-control" cols="30" rows="10"
+                            placeholder="Todo description"></textarea>
+                        <center>
+                            <div class="modal-footer">
+                                <input type="submit" class="btn btn-success" id="success" value="Add">
+                                <a class="btn btn-danger c">Close</a>
+                            </div>
+                        </center>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <!-- //header  -->
+    <div class="fluid">
+        <nav class="navbar navbar-dark bg-dark">
+            <a href="#" class="text-md-left btn btn-primary" id="add" >Add Todos</a>
+            <h1 class="text-white">Todos</h1>
+        </nav>
+    </div>
+
+    <div class="container ">
+        <div class="row d-flex justify-content-center">
+            <%if(data.length > 0){%>
+                <% for(let todo of data){%>
+                <div style="margin: 14px;" class="card col-sm-3 card col-sm-1 todo">
+                    <div class="card-body shadow p-3 mb-5 bg-white rounded justify-content-end">
+                        <center>
+                            <h3 class="card-title <%=todo.id%>"><%=todo.title%></h3>
+                        </center>
+                        <p class="card-text <%=todo.id%>"><%=todo.description%></p>
+                    </div>
+                    <form action="/todos/delete/<%=todo.id%>?_method=DELETE" id="<%=todo.id%>" method="post"></form>
+                    <button class="btn btn-primary edit" id="<%=todo.id%>">Edit</button>
+                    <button class="btn btn-danger delete" name="<%=todo.id%>">Delete</button>
+                    <br>
+                </div>
+                <%}%>
+            <%}else{%>
+            <center>
+                <h1>No Todos Created</h1>
+            </center>
+            <%}%>
+        </div>        
+    </div>
+
+    <script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(()=>{
+            $("body").on('click','.edit',(e)=>{
+                let elements = $(`.${e.target.id}`);
+                let title = elements[0].innerText;
+                let description = elements[1].innerText;
+                let id = e.target.id;
+                //set the values
+                
+                $('#title').val(title);
+                $('#description').val(description);
+                $('#header').text("Edit Todo");
+                $('#form').attr('action', '/todos/update/'+id+'?_method=PUT');
+                $('#success').val("Edit");
+                //show the modal
+                $('#addEdit').modal('show');
+            })
+        });
+        $('body').on('click','.delete',(e)=>{
+            $(`#${e.target.name}`).submit();
+        })
+        $('.c').click(()=>{
+            $('#addEdit').modal('hide');
+        })
+        $('#add').click(()=>{
+            $('#id').val("");
+                $('#title').val("");
+                $('#description').val("");
+                $('#header').text("Add Todo");
+                $('#form').attr('action',"/todos/add");
+                $('#success').val("Add");
+            $('#addEdit').modal('show');
+        });
+        
+    </script>
+</body>
+
+</html>
