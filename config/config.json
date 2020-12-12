@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "simpletest1234",
-    "password": "simple101",
-    "database": "simplecrudtest",
-    "host": "db4free.net",
+    "username": "r3PXD3irSU",
+    "password": "jrALLVpPzl",
+    "database": "r3PXD3irSU",
+    "host": "remotemysql.com",
     "dialect": "mysql"
   },
   "test": {

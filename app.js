@@ -3,6 +3,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const logger = require('morgan');
+
+//user logger
+app.use(logger('dev'));
 
 //use method override
 app.use(methodOverride("_method"));
